@@ -24,6 +24,54 @@ def bobbleSort(lst):
                 lst[j], lst[j+1] = lst[j+1], lst[j]
     return lst
 
+def sortHoar(lst):
+    """ сортировка Хоара (быстрая) """
+    if len(lst) < 2:
+        return lst
+    check = lst[0]
+    mid = []
+    low = []
+    high = []
+    for n in lst:
+        if n == check:
+            mid.append(n)
+        elif n < check:
+            low.append(n)
+        else:
+            high.append(n)
+    
+    return sortHoar(low) + mid + sortHoar(high)
+
+def sortMerge(lst):
+    """ сортировка методом слияния """
+    L = len(lst)
+    if L <= 1:
+        return lst
+    left, right = sortMerge(lst[:round(L/2)]), sortMerge(lst[round(L/2):])
+    lst = []
+
+    while True:
+        if not left and not right:
+            break
+        elif not left:
+            lst = lst + right
+            right = []
+            continue
+        elif not right:
+            lst = lst + left
+            left = []
+            continue
+        elif left[0] == right[0]:
+            lst.append(left.pop(0))
+            lst.append(right.pop(0))
+            continue
+        elif left[0] < right[0]:
+            lst.append(left.pop(0))
+            continue
+        elif left[0] > right[0]:
+            lst.append(right.pop(0))
+            continue
+    return lst
 
 def testSort(someSortFunction):
     print("Now test: " + someSortFunction.__doc__ + ' ', end='')
@@ -36,3 +84,5 @@ if __name__ == "__main__":
     testSort(insertSort)
     testSort(choiseSort)
     testSort(bobbleSort)
+    testSort(sortHoar)
+    testSort(sortMerge)
