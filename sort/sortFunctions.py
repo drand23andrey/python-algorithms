@@ -29,8 +29,8 @@ def sortHoar(lst):
     if len(lst) < 2:
         return lst
     check = lst[0]
-    mid = []
     low = []
+    mid = []
     high = []
     for n in lst:
         if n == check:
